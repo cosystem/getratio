@@ -6,6 +6,7 @@
 # at specified resolution
 #
 # ussage: ./getratio.py [hklin] [pdbin] [reso_min] [reso_max] [reso_step]
+# output: ratiolist.csv
 #
 # Author: Guanya PENG
 # Aug 13, 2014
@@ -176,7 +177,10 @@ def getratiolist(sthol2_List, sitesnum, minreso, maxreso, step):
     resolist = newrange(minreso, maxreso, step)
     ratiolist=[]
     for i in resolist:
-        ratiolist.append(len([x for x in sthol2list if np.sqrt(1/(4*x)) >= i])/sitesnum)
+        try:
+            ratiolist.append(len([x for x in sthol2list if np.sqrt(1/(4*x)) >= i])/sitesnum)
+        except ZeroDivisionError:
+            sys.exit("There is no defined element in the pdb file. Exit.")
     return ratiolist
 
 def is_numstring(s):
@@ -239,7 +243,7 @@ while True:
         exit(1)
     else:
         # count the number of sulfur(S)
-        numsites = pdbopt(pdbfile).getAtomNum('P')
+        numsites = pdbopt(pdbfile).getAtomNum('S')
         # calculate transformation tensor
         tensor = Tensor(unitcell)
         # convert h k l to sin(theta)^2/lambda^2
