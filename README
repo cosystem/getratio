@@ -1,3 +1,10 @@
 This is README
+getratio
+==========
 
-I have added this line
+python script to calculate the #Observation/#P ratio at user specified resolution range
+input: hklfile, pdbfile, reso_min, reso_max, reso_step
+output: ratiolist.csv
+
+ussage: ./getratio.py [hklin] [pdbin] [reso_min] [reso_max] [reso_step]
+
