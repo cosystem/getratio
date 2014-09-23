@@ -243,7 +243,7 @@ while True:
         exit(1)
     else:
         # count the number of sulfur(S)
-        numsites = pdbopt(pdbfile).getAtomNum('S')
+        numsites = pdbopt(pdbfile).getAtomNum('P')
         # calculate transformation tensor
         tensor = Tensor(unitcell)
         # convert h k l to sin(theta)^2/lambda^2
@@ -259,6 +259,7 @@ while True:
                 %(sys.argv[3], sys.argv[4], sys.argv[5])
         sys.exit(1)
     else:
+        np.seterr(divide='ignore') # ignore divided by 0 error in np.sqrt(1/(4*x) in the getratiolist function
         ratiolist = getratiolist(sthol2list, numsites, resomin, resomax, resostep)
         break
 
